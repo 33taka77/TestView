@@ -22,6 +22,8 @@
 		81BA27B718E8F0F50058BAE0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA279618E8F0F50058BAE0 /* UIKit.framework */; };
 		81BA27BF18E8F0F50058BAE0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BA27BD18E8F0F50058BAE0 /* InfoPlist.strings */; };
 		81BA27C118E8F0F50058BAE0 /* TestPhotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BA27C018E8F0F50058BAE0 /* TestPhotoTests.m */; };
+		81BA27CB18E8F1D80058BAE0 /* um_074.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 81BA27CA18E8F1D80058BAE0 /* um_074.jpg */; };
+		81BA27CF18E93C160058BAE0 /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BA27CE18E93C160058BAE0 /* ScrollViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,9 @@
 		81BA27BC18E8F0F50058BAE0 /* TestPhotoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestPhotoTests-Info.plist"; sourceTree = "<group>"; };
 		81BA27BE18E8F0F50058BAE0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81BA27C018E8F0F50058BAE0 /* TestPhotoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestPhotoTests.m; sourceTree = "<group>"; };
+		81BA27CA18E8F1D80058BAE0 /* um_074.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = um_074.jpg; sourceTree = "<group>"; };
+		81BA27CD18E93C160058BAE0 /* ScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewController.h; sourceTree = "<group>"; };
+		81BA27CE18E93C160058BAE0 /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +119,12 @@
 		81BA279818E8F0F50058BAE0 /* TestPhoto */ = {
 			isa = PBXGroup;
 			children = (
+				81BA27CA18E8F1D80058BAE0 /* um_074.jpg */,
 				81BA27A118E8F0F50058BAE0 /* AppDelegate.h */,
 				81BA27A218E8F0F50058BAE0 /* AppDelegate.m */,
 				81BA27A418E8F0F50058BAE0 /* Main_iPhone.storyboard */,
+				81BA27CD18E93C160058BAE0 /* ScrollViewController.h */,
+				81BA27CE18E93C160058BAE0 /* ScrollViewController.m */,
 				81BA27A718E8F0F50058BAE0 /* Main_iPad.storyboard */,
 				81BA27AA18E8F0F50058BAE0 /* ViewController.h */,
 				81BA27AB18E8F0F50058BAE0 /* ViewController.m */,
@@ -234,6 +242,7 @@
 				81BA27A918E8F0F50058BAE0 /* Main_iPad.storyboard in Resources */,
 				81BA27AE18E8F0F50058BAE0 /* Images.xcassets in Resources */,
 				81BA27A618E8F0F50058BAE0 /* Main_iPhone.storyboard in Resources */,
+				81BA27CB18E8F1D80058BAE0 /* um_074.jpg in Resources */,
 				81BA279D18E8F0F50058BAE0 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +265,7 @@
 				81BA27AC18E8F0F50058BAE0 /* ViewController.m in Sources */,
 				81BA27A318E8F0F50058BAE0 /* AppDelegate.m in Sources */,
 				81BA279F18E8F0F50058BAE0 /* main.m in Sources */,
+				81BA27CF18E93C160058BAE0 /* ScrollViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +403,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TestPhoto/TestPhoto-Prefix.pch";
 				INFOPLIST_FILE = "TestPhoto/TestPhoto-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -406,7 +418,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TestPhoto/TestPhoto-Prefix.pch";
 				INFOPLIST_FILE = "TestPhoto/TestPhoto-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
