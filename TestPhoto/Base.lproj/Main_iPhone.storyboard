@@ -65,22 +65,9 @@
                     <view key="view" contentMode="scaleToFill" id="fiq-73-X9S">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="nJX-pc-QlG">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.10710862798309317" green="0.57700767077819426" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="wmC-bt-ftq" id="WnT-Bp-LiM"/>
-                                </connections>
-                            </scrollView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="xT7-qp-EJq"/>
-                    <connections>
-                        <outlet property="scrollView" destination="nJX-pc-QlG" id="84V-xx-y8z"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Rm-yX-Js3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -9,8 +9,10 @@
 #import "ScrollViewController.h"
 
 @interface ScrollViewController ()
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
+@property (nonatomic, retain) UIScrollView *scrollView;
+@property (nonatomic, retain) NSMutableArray* images;
+@property NSInteger page;
+@property BOOL rotating;
 @end
 
 @implementation ScrollViewController
@@ -24,10 +26,110 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if( self != nil )
+    {
+        self.images = [[NSMutableArray alloc] init];
+        [self.images addObject:[UIImage imageNamed:@"1.jpg"]];
+        [self.images addObject:[UIImage imageNamed:@"2.jpg"]];
+        [self.images addObject:[UIImage imageNamed:@"3.jpg"]];
+        [self.images addObject:[UIImage imageNamed:@"4.jpg"]];
+        [self.images addObject:[UIImage imageNamed:@"5.jpg"]];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
+    CGRect frameRect = CGRectMake(0, 0, width, height);
+    self.scrollView = [[UIScrollView alloc] initWithFrame:frameRect];
+
+    // 横スクロールのインジケータを非表示にする
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    // ページングを有効にする
+    self.scrollView.pagingEnabled = YES;
+    
+    self.scrollView.userInteractionEnabled = YES;
+    self.scrollView.delegate = (id)self;
+    // スクロールの範囲を設定
+    [self.scrollView setContentSize:CGSizeMake((self.images.count * width), height)];
+    [self.view addSubview:self.scrollView];
+    
+    for( int i = 0; i < self.images.count; i++ ){
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i*width, 0, width, height)];
+        imageView.image = self.images[i];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.scrollView addSubview:imageView];
+    }
+    self.page = 0;
+    CGRect frame = self.scrollView.frame;
+    frame.origin.x = frame.size.width * self.page;
+    [self.scrollView scrollRectToVisible:frame animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)_scrollView
+{
+    if( self.rotating == NO )
+        return;
+    CGFloat pageWidth = self.scrollView.bounds.size.width;
+    if( fmod(self.scrollView.contentOffset.x, pageWidth) == 0 )
+    {
+        self.page = self.scrollView.contentOffset.x / pageWidth;
+        
+    }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    CGRect rect = self.scrollView.bounds;
+    CGFloat newWidth = rect.size.height;
+    CGFloat newHeight = rect.size.width;
+    
+    for( int i = 0; i < self.images.count; i++ )
+    {
+        UIImageView* imageView = (UIImageView*)self.scrollView.subviews[ i ];
+        CGRect newRect = CGRectMake(newWidth/2+i*newWidth , newHeight/2, 0, 0);
+        CGRect rect = newRect;
+        imageView.frame = rect;
+    }
+
+    //UIImageView* currentImageView = self.scrollView.subviews[self.page];
+    //currentImageView.frame = newRect;
+    self.rotating = YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    self.rotating = NO;
+    self.scrollView.frame = self.view.bounds;
+    CGFloat width = self.view.bounds.size.width;
+    CGFloat height = self.view.bounds.size.height;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.1];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(endAnimation)];
+
+    [self.scrollView setContentSize:CGSizeMake((self.images.count * width), height)];
+    for( int i = 0; i < self.images.count; i++ )
+    {
+        UIImageView* imageView = (UIImageView*)self.scrollView.subviews[ i ];
+        CGRect rect = CGRectMake(i * width, 0, width, height);
+        imageView.frame = rect;
+    }
+    CGRect frame = self.scrollView.frame;
+    frame.origin.x = width * self.page;
+    [self.scrollView scrollRectToVisible:frame animated:NO];
+    [UIView commitAnimations];
+
+}
+- (void)endAnimation
+{
 }
 
 - (void)didReceiveMemoryWarning
