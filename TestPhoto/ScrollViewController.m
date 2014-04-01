@@ -54,6 +54,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     // ページングを有効にする
     self.scrollView.pagingEnabled = YES;
+    self.scrollView.autoresizesSubviews = NO;
     
     self.scrollView.userInteractionEnabled = YES;
     self.scrollView.delegate = (id)self;
@@ -61,10 +62,26 @@
     [self.scrollView setContentSize:CGSizeMake((self.images.count * width), height)];
     [self.view addSubview:self.scrollView];
     
+    CGFloat realWidth;
+    CGFloat realHeight;
+    CGFloat imageWidth;
+    CGFloat imageHeight;
     for( int i = 0; i < self.images.count; i++ ){
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i*width, 0, width, height)];
+        UIImage* image = self.images[i];
+        imageWidth = image.size.width;
+        imageHeight = image.size.height;
+        if( imageWidth/imageHeight < width/height ){
+            realHeight = height;
+            realWidth = height*imageWidth/imageHeight;
+        }else{
+            realWidth = width;
+            realHeight = width*imageHeight/imageWidth;
+        }
+        
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i*realWidth, (height-realHeight)/2, realWidth, realHeight)];
         imageView.image = self.images[i];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.autoresizesSubviews = NO;
         [self.scrollView addSubview:imageView];
     }
     self.page = 0;
@@ -90,7 +107,6 @@
     CGRect rect = self.scrollView.bounds;
     CGFloat newWidth = rect.size.height;
     CGFloat newHeight = rect.size.width;
-    
     for( int i = 0; i < self.images.count; i++ )
     {
         UIImageView* imageView = (UIImageView*)self.scrollView.subviews[ i ];
@@ -111,20 +127,35 @@
     CGFloat width = self.view.bounds.size.width;
     CGFloat height = self.view.bounds.size.height;
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.1];
+    [UIView setAnimationDuration:3.0];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(endAnimation)];
 
     [self.scrollView setContentSize:CGSizeMake((self.images.count * width), height)];
-    for( int i = 0; i < self.images.count; i++ )
-    {
-        UIImageView* imageView = (UIImageView*)self.scrollView.subviews[ i ];
-        CGRect rect = CGRectMake(i * width, 0, width, height);
-        imageView.frame = rect;
-    }
     CGRect frame = self.scrollView.frame;
     frame.origin.x = width * self.page;
     [self.scrollView scrollRectToVisible:frame animated:NO];
+
+    CGFloat realWidth;
+    CGFloat realHeight;
+    CGFloat imageWidth;
+    CGFloat imageHeight;
+    for( int i = 0; i < self.images.count; i++ )
+    {
+        UIImageView* imageView = (UIImageView*)self.scrollView.subviews[ i ];
+        UIImage* image = self.images[i];
+        imageWidth = image.size.width;
+        imageHeight = image.size.height;
+        if( imageWidth/imageHeight < width/height ){
+            realHeight = height;
+            realWidth = height*imageWidth/imageHeight;
+        }else{
+            realWidth = width;
+            realHeight = width*imageHeight/imageWidth;
+        }
+        CGRect rect = CGRectMake(i * width+(width-realWidth)/2, (height-realHeight)/2, realWidth, realHeight);
+        imageView.frame = rect;
+    }
     [UIView commitAnimations];
 
 }
